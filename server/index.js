@@ -93,7 +93,7 @@ app.get('/student',async(req,res)=>{
     })
 
 })
-
+//put opertion
 app.put('/student/:_id',async(req,res)=>{
 
     const {_id} = req.params;
@@ -114,6 +114,41 @@ app.put('/student/:_id',async(req,res)=>{
         data:updateStudent,
         message:`successfully update student ${_id}`
     })
+})
+
+//patch operation
+
+app.patch('/studentPut/:_id', async (req,res)=>{
+    const {_id} = req.params;
+
+    const {name,mobile,age,email} = req.body;
+
+    const findStudent = await Student.findById(_id)
+
+    if(name){
+        findStudent.name = name;
+    }
+    if(mobile)
+    {
+        findStudent.mobile = mobile;
+    }
+    if(age)
+    {
+        findStudent.age = age;
+    }
+    if(email)
+    {
+        findStudent.email = email;
+    }
+    
+    const updateStudent = findStudent.save();
+
+    res.json({
+        success:true,
+        data:updateStudent,
+        message:"successfully fetch update student"
+    })
+
 })
 
 app.listen(PORT, ()=>{
